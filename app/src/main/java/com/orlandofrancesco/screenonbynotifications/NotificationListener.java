@@ -23,16 +23,17 @@ public class NotificationListener extends NotificationListenerService{
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
-        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK
-                | PowerManager.ACQUIRE_CAUSES_WAKEUP, "CHESS");
-        try {
-            wakeLock.acquire();
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-        } finally {
-            wakeLock.release();
+
+        if (sbn.getNotification().visibility == 0){
+            PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wakeLock = powerManager.newWakeLock
+                    (PowerManager.SCREEN_BRIGHT_WAKE_LOCK
+                            | PowerManager.ACQUIRE_CAUSES_WAKEUP, "");
+            try {
+                wakeLock.acquire();
+            } catch (Exception e) { } finally {
+                wakeLock.release();
+            }
         }
     }
 }
