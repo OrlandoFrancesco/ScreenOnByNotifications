@@ -19,7 +19,7 @@ public class NotificationListener extends NotificationListenerService{
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
 
-        if (sbn.getNotification().visibility == 0){
+        if (sbn.getNotification().visibility == 0 && sbn.isClearable()){
             PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
             @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wakeLock = powerManager.newWakeLock
                     (PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "");
